@@ -2,6 +2,6 @@
 
 ## Command git
 For get the changes of remote
-'''
+```
 git pull origin main --rebase
-'''
+```
