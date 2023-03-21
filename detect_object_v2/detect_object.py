@@ -81,20 +81,34 @@ class MyWindow(QMainWindow):
         labels = results.xyxyn[0][:, -1].numpy()
         info = results.pandas().xyxy[0]
         print(info)
-        return labels
+        print(labels)
+
+        #Mostramos FPS
+        self.rgb_image_more_label_info = np.squeeze(results.render())
+
+        '''
+        h, w, ch = rgb_image.shape
+        bytes_per_line = ch * w
+        convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
+        pixmap = QtGui.QPixmap.fromImage(convert_to_Qt_format)
+        self.ui.lblVideoCapture.setPixmap(pixmap)
+        '''
+
 
     @pyqtSlot()
     def get_frame(self):
         ret, frame = self.cap.read()
         if ret:
-            labels = self.detect_objects(frame)
-            print(labels)
-            rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            h, w, ch = rgb_image.shape
+            #labels = self.detect_objects(frame)
+            self.detect_objects(frame)
+            #rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            #print(rgb_image)
+            #h, w, ch = rgb_image.shape
+            h, w, ch = self.rgb_image_more_label_info.shape
             bytes_per_line = ch * w
-            convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
+            convert_to_Qt_format = QtGui.QImage(self.rgb_image_more_label_info.data, w, h, bytes_per_line, QtGui.QImage.Format_BGR888)
             
-            '''
+            
             # Escalar la imagen para que se ajuste al QLabel
             pixmap = QPixmap.fromImage(convert_to_Qt_format)
             pixmap = pixmap.scaled(self.ui.lblVideoCapture.size(), Qt.KeepAspectRatio)
@@ -102,12 +116,11 @@ class MyWindow(QMainWindow):
             # Mostrar la imagen en el QLabel
             self.ui.lblVideoCapture.setPixmap(pixmap)        
             self.ui.lblVideoCapture.setPixmap(QPixmap.fromImage(convert_to_Qt_format))
-            self.ui.lblVideoCapture.setText(f"Objects detected: {labels}")
-            '''
+            #self.ui.lblVideoCapture.setText(f"Objects detected: {labels}")
             
-            pixmap = QtGui.QPixmap.fromImage(convert_to_Qt_format)
-            self.ui.lblVideoCapture.setPixmap(pixmap)
-            #self.ui.lblVideoCapture.setText(f"Objects detected: {labels}")  
+            
+            #pixmap = QtGui.QPixmap.fromImage(convert_to_Qt_format)
+            #self.ui.lblVideoCapture.setPixmap(pixmap)
                   
 
 if __name__ == '__main__':

@@ -5,3 +5,6 @@ For get the changes of remote
 ```
 git pull origin main --rebase
 ```
+
+## Documentations
+This site of documentations QImages in enum QImage::Format [QImages Class](https://doc.qt.io/qt-6/qimage.html)
