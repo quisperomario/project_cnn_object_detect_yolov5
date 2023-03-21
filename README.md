@@ -10,4 +10,4 @@ git pull origin main --rebase
 This site of documentations QImages in enum QImage::Format [QImages Class](https://doc.qt.io/qt-6/qimage.html)
 
 ## Project Finished
-![finish detect onject](./detect_object_v2/images/screenshot_1.jpg)
+![finish detect onject](/images/screenshot_1.jpg)
